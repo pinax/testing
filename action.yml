@@ -18,15 +18,18 @@ runs:
         python-version: ${{ inputs.python }}
 
     - name: Install Django and Testing Tools
+      shell: bash
       run: |
         pip install Django==${{ inputs.django }} coverage pytest django-test-plus
         pip install .
 
     - name: Running Python Tests
+      shell: bash
       run: coverage run runtests.py
 
     - name: Upload Coverage Report
       if: inputs.django == '3.2.*' && inputs.python == '3.10'
+      shell: bash
       run: |
         pip install codecov
         coverage xml
