@@ -1,0 +1,33 @@
+name: Pinax Testing
+description: Runs tests
+inputs:
+  python:
+    description: "What version of Python?"
+    required: true
+  django:
+    descriptoin: "What version of Django?"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ inputs.python }}
+
+    - name: Install Django and Testing Tools
+      run: |
+        pip install Django==${{ inputs.django }} coverage pytest django-test-plus
+        pip install .
+
+    - name: Running Python Tests
+      run: coverage run runtests.py
+
+    - name: Upload Coverage Report
+      if: inputs.django == '3.2.*' && inputs.python == '3.10'
+      run: |
+        pip install codecov
+        coverage xml
+        codecov --required -X search gcov pycov -f coverage.xml
