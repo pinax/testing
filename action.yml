@@ -27,7 +27,7 @@ runs:
 
     - name: Running Python Tests
       shell: bash
-      run: coverage run runtests.py
+      run: ./test.sh
 
     - name: Upload Coverage Report
       if: inputs.django == '3.2.*' && inputs.python == '3.10'
