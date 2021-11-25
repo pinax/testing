@@ -19,13 +19,11 @@ runs:
 
     - name: Install Django and Testing Tools
       shell: bash
-      run: |
-        pip install Django==${{ inputs.django }} coverage pytest django-test-plus
-        pip install .
+      run: pip install -r requirements.testing.txt
 
     - name: Running Python Tests
       shell: bash
-      run: coverage run runtests.py
+      run: ./test.sh
 
     - name: Upload Coverage Report
       if: inputs.django == '3.2.*' && inputs.python == '3.10'
