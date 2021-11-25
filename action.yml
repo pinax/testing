@@ -17,13 +17,17 @@ runs:
       with:
         python-version: ${{ inputs.python }}
 
-    - name: Install Django and Testing Tools
+    - name: Install Django
+      shell: bash
+      run: pip install Django==${{ inputs.django }}
+
+    - name: Testing Tools
       shell: bash
       run: pip install -r requirements.testing.txt
 
     - name: Running Python Tests
       shell: bash
-      run: ./test.sh
+      run: coverage run runtests.py
 
     - name: Upload Coverage Report
       if: inputs.django == '3.2.*' && inputs.python == '3.10'
