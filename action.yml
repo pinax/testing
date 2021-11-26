@@ -23,7 +23,9 @@ runs:
 
     - name: Testing Tools
       shell: bash
-      run: pip install -r requirements.testing.txt
+      run: |
+        pip install .
+        pip install -r requirements.testing.txt
 
     - name: Running Python Tests
       shell: bash
